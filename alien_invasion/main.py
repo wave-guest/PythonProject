@@ -3,6 +3,7 @@ from pygame.sprite import Group
 
 import game_functions as gf
 from alien import Alien
+from game_stats import GameStats
 from settings import Settings
 from ship import Ship
 
@@ -29,13 +30,16 @@ def run_game():
     # 设置背景色
     # bg_color = (230, 230, 230)
 
+    # 创建一个用于存储游戏统计信息的实例
+    stats = GameStats(ai_settings)
+
     # 开始游戏的主循环
     while True:
         # 监视键盘和鼠标事件
         gf.check_events(ai_settings, screen, ship, bullets)
         ship.update()
-        gf.update_bullets(aliens, bullets)
-        gf.update_aliens(ai_settings, aliens)
+        gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
+        gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
         gf.update_screen(ai_settings, screen, ship, aliens, bullets)
 
         # 每次循环都重绘屏幕
