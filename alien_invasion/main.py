@@ -5,6 +5,7 @@ import game_functions as gf
 from alien import Alien
 from button import Button
 from game_stats import GameStats
+from scoreboard import Scoreboard
 from settings import Settings
 from ship import Ship
 
@@ -34,8 +35,9 @@ def run_game():
     # 设置背景色
     # bg_color = (230, 230, 230)
 
-    # 创建一个用于存储游戏统计信息的实例
+    # 创建一个用于存储游戏统计信息的实例, 创建记分牌
     stats = GameStats(ai_settings)
+    sb = Scoreboard(ai_settings, screen, stats)
 
     # 开始游戏的主循环
     while True:
@@ -43,10 +45,10 @@ def run_game():
         gf.check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
         if stats.game_active:
             ship.update()
-            gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
+            gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets)
             gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
 
-        gf.update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button)
+        gf.update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, play_button)
 
         # 每次循环都重绘屏幕
         # screen.fill(bg_color)
